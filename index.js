@@ -1,5 +1,6 @@
 const express = require('express')
 const nunjucks = require('nunjucks')
+const User = require('./db/db')
 
 const app = express()
 
@@ -12,10 +13,16 @@ nunjucks.configure('views', {
 app.use(express.urlencoded({ extended: false }))
 app.set('view engine', 'njk')
 
-const users = ['Yuri Canuto', 'Priscila Canuto', 'Leon Canuto']
+// const users = ['Yuri Canuto', 'Priscila Canuto', 'Leon Canuto']
 
 app.get('/', (req, res) => {
-  return res.render('list', { users })
+  User.find()
+    .then((users) => {
+      return res.render('list', { users })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 })
 
 app.get('/new', (req, res) => {
@@ -23,7 +30,10 @@ app.get('/new', (req, res) => {
 })
 
 app.post('/create', (req, res) => {
-  users.push(req.body.user)
+  // users.push(req.body.user)
+  console.log(req.body.user)
+  User.create({ name: req.body.user })
+
   res.redirect('/')
 })
 
