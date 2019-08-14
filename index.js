@@ -30,7 +30,6 @@ app.get('/new', (req, res) => {
 })
 
 app.get('/edit/:id', (req, res) => {
-
   User.findById(req.params.id)
     .then((user) => {
       var teste = user.updateOne({ $set: { name: user.name + ' mudou', city: 'joao pessoa' } }, user).exec()
