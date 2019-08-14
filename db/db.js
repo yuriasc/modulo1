@@ -5,6 +5,10 @@ mongoose.connect('mongodb://@127.0.0.1/aula', { useNewUrlParser: true })
 var UserSchema = new mongoose.Schema({
   name: {
     type: String
+  },
+  active: {
+    type: Boolean,
+    default: false
   }
 })
 
