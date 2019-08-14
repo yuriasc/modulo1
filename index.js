@@ -29,10 +29,23 @@ app.get('/new', (req, res) => {
   return res.render('new')
 })
 
+app.get('/edit/:id', (req, res) => {
+
+  User.findById(req.params.id)
+    .then((user) => {
+      var teste = user.updateOne({ $set: { name: user.name + ' mudou', city: 'joao pessoa' } }, user).exec()
+      console.log(teste)
+      res.redirect('/')
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+})
+
 app.post('/create', (req, res) => {
   // users.push(req.body.user)
   console.log(req.body.user)
-  User.create({ name: req.body.user })
+  User.create({ name: req.body.user, age: '2' })
 
   res.redirect('/')
 })
